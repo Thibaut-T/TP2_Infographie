@@ -1,3 +1,9 @@
+const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
+    linewidth: 0.05,
+    color: 0x0000FF
+})
+const droite = []; // Tableau de points pour la droite
+
 let coordonnees=document.getElementById("coordonnees");
 
 let button_coordonnees=document.getElementById("coordonnees")
@@ -12,7 +18,7 @@ function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
     let Xaxis = event.clientX - rect.left;        //Take the X coordonate of the click and subtract it from the left side of the canvas
     let Yaxis = event.clientY - rect.top;
-    droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ) );
+    droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
     afficherDroite();
     console.log("Coordinate x: " + Xaxis + "Coordinate y: " + Yaxis);
 }
