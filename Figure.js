@@ -17,14 +17,6 @@ renderer.domElement.addEventListener("click", function(e) //Add event to our can
 });
 
 
-function getMousePosition(canvas, event) {
-    let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
-    let Xaxis = event.clientX - rect.left;        //Take the X coordinate of the click and subtract it from the left side of the canvas
-    let Yaxis = event.clientY - rect.top;
-    console.log("Coordinate x: " + Xaxis + "Coordinate y: " + Yaxis);
-}
-
-
 const points = []; // tableau de points
 
 let button_reset=document.getElementById("reset");
@@ -39,6 +31,14 @@ let coeur=document.getElementById("coeur");
 
 cercle.addEventListener("click",drawCircle);
 coeur.addEventListener("click",drawHeart);
+
+function getMousePosition(canvas, event) {
+    let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
+    let Xaxis = event.clientX - rect.left;        //Take the X coordinate of the click and subtract it from the left side of the canvas
+    let Yaxis = event.clientY - rect.top;
+    console.log("Coordinate x: " + Xaxis + "Coordinate y: " + Yaxis);
+}
+
 
 function reset(){
     document.location.reload(true);
