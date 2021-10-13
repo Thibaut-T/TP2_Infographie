@@ -28,7 +28,7 @@ function afficherDroite(){
     console.log(tableau[0]);
     for(let i=0;i<tableau.length;i++){
         droite.push(new THREE.Vector3(tableau[i],tableau[i+1], 0 ) );
-        console.log(THREE Vector3); // PROOOOOOOBLEME
+        console.log(THREE.Vector3); // PROOOOOOOBLEME
         i++;
     }
     
