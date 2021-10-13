@@ -11,6 +11,7 @@ const material = new THREE.PointsMaterial({ //définition taille et couleurs des
 });
 
 const points = []; // tableau de points
+const distance = 10; //point de la caméra
 
 renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
 {
@@ -77,7 +78,7 @@ function afficherCourbe(tab){
     
     const figure = new THREE.Points( geometry, material );
     scene.add( figure ); // on ajoute à la scène tous les points
-    camera.position.z = 10;
+    camera.position.z = distance;
     renderer.render( scene, camera );
 }
 

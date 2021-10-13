@@ -11,9 +11,8 @@ button_coordonnees.addEventListener("click",afficherDroite);
 
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
-    let Xaxis = 10 * Math.tan((event.clientX - rect.left - (canvas.width/2)) * (580321/429777));        //Take the X coordonate of the click and subtract it from the left side of the canvas
-    let Yaxis = 10 * Math.tan((rect.top + (canvas.height/2) - event.clientY) * (233239/444744));
-    //droite.push( new THREE.Vector3( Xaxis/(128/3), Yaxis/(2335/38), 0 ));
+    let Xaxis = distance * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2);
+    let Yaxis = distance * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2));
     droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
     afficherDroite();
     console.log(event.clientX + " - " + rect.left + " - " + (canvas.width/2) + " = " + Xaxis + " " + rect.top + " + " + (canvas.height/2) + " - " + event.clientY + " = " + Yaxis);
@@ -28,7 +27,7 @@ function afficherDroite(){
     const figure = new THREE.Line( geometry, line );
     scene.add( figure ); // on ajoute à la scène tous les droites
     
-    camera.position.z = 10;
+    camera.position.z = distance;
     renderer.render( scene, camera );
 }
 
