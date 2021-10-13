@@ -21,8 +21,7 @@ function afficherDroite(){
     let StringofPoint=coordonnees;
     let reg=new RegExp("[ ,;]+", "g");
     let tableau=StringofPoint.split(reg);
-    let Xpoint=tableau[0];
-    let Ypoint=tableau[1];
+   // for(let sizeof
     console.log(droite);
     if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
     const geometry = new THREE.BufferGeometry().setFromPoints(droite);  // On ajoute au buffer
