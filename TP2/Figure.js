@@ -10,6 +10,13 @@ const material = new THREE.PointsMaterial({ //définition taille et couleurs des
     color: 0x7CFC00
 });
 
+const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
+    size: 0.05,
+    color: 0x0000FF
+})
+
+const points = []; // tableau de points
+const droite = []; // Tableau de points pour la droite
 
 renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
 {
@@ -21,11 +28,10 @@ function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
     let Xaxis = event.clientX - rect.left;        //Take the X coordinate of the click and subtract it from the left side of the canvas
     let Yaxis = event.clientY - rect.top;
+    droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ) );
+    afficherDroite();
     console.log("Coordinate x: " + Xaxis + "Coordinate y: " + Yaxis);
 }
-
-
-const points = []; // tableau de points
 
 let button_reset=document.getElementById("reset");
 button_reset.addEventListener("click",reset);
@@ -71,13 +77,13 @@ function calculate(){
         points.push( new THREE.Vector3( evaluate(t,x), evaluate(t,y), 0 ) );
     }
     
-    afficher();
+    afficherCourbe();
 }
 
 /**
  * Affiche les points de la courbe paramétrique
  */
-function afficher(){
+function afficherCourbe(){
     const geometry = new THREE.BufferGeometry().setFromPoints( points );
     
     const figure = new THREE.Points( geometry, material );
@@ -133,4 +139,16 @@ function evaluate(t, str){
         str = t + tab.join('t');
     }
     return eval(str);
+}
+
+function afficherDroite(){
+    console.log(droite);
+    if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
+    const geometry = new THREE.BufferGeometry().setFromPoints(droite);  // On ajoute au buffer
+    
+    const figure = new THREE.Line( geometry, line );
+    scene.add( figure ); // on ajoute à la scène tous les droites
+    
+    camera.position.z = 5;
+    renderer.render( scene, camera );
 }
