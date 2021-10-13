@@ -25,7 +25,7 @@ let button = document.getElementById("valider");
 button.addEventListener("click", wichOne);
 
 function wichOne(){
-    (document.getElementById("coordonnees").value == "") ? calculate() : afficherDroite();
+    (document.getElementById("coordonnees").value == "") ? calculate() : takeCoordonnees();
 }
 
 let cercle=document.getElementById("cercle");
@@ -77,7 +77,7 @@ function afficherCourbe(tab){
     
     const figure = new THREE.Points( geometry, material );
     scene.add( figure ); // on ajoute à la scène tous les points
-    camera.position.z = 5;
+    camera.position.z = 10;
     renderer.render( scene, camera );
 }
 
