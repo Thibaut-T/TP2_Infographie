@@ -1,12 +1,7 @@
-let coordonnees=document.getElementById("coordonnees");
-
-let button_coordonnees=document.getElementById("coordonnees")
+let button_coordonnees=document.getElementById("1")
 button_coordonnees.addEventListener("click",afficherDroite);
 
-renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
-{
-    getMousePosition(renderer.domElement, e);      //If their is ²a click, call the function 
-});
+
 
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
@@ -18,11 +13,12 @@ function getMousePosition(canvas, event) {
 }
 
 function afficherDroite(){
+    let coordonnees=document.getElementById("coordonnees").value;
+    console.log(coordonnees);
     let StringofPoint=coordonnees;
     let reg=new RegExp("[ ,;]+", "g");
     let tableau=StringofPoint.split(reg);
-   // for(let sizeof
-    console.log(droite);
+    console.log(tableau);
     if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
     const geometry = new THREE.BufferGeometry().setFromPoints(droite);  // On ajoute au buffer
     

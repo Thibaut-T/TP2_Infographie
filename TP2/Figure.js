@@ -18,6 +18,10 @@ const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des 
 const points = []; // tableau de points
 const droite = []; // Tableau de points pour la droite
 
+renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
+{
+    getMousePosition(renderer.domElement, e);      //If their is ²a click, call the function 
+});
 
 let button_reset=document.getElementById("reset");
 button_reset.addEventListener("click",reset);
