@@ -9,8 +9,6 @@ let coordonnees=document.getElementById("coordonnees");
 let button_coordonnees=document.getElementById("1");
 button_coordonnees.addEventListener("click",afficherDroite);
 
-const droite = []; // tableau de points
-
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
     let Xaxis = event.clientX - rect.left - (canvas.width/2);        //Take the X coordonate of the click and subtract it from the left side of the canvas
@@ -28,7 +26,7 @@ function afficherDroite(){
     console.log(tableau[0]);
     for(let i=0;i<tableau.length;i++){
         droite.push(new THREE.Vector3(tableau[i],tableau[i+1], 0 ) );
-        console.log(THREE.Vector3); // PROOOOOOOBLEME
+        console.log(droite[droite.length-1]); // PROOOOOOOBLEME
         i++;
     }
     

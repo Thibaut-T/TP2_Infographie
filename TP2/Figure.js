@@ -22,7 +22,11 @@ button_reset.addEventListener("click",reset);
 
 
 let button = document.getElementById("valider");
-button.addEventListener("click", calculate);
+button.addEventListener("click", wichOne);
+
+function wichOne(){
+    (document.getElementById("coordonnees").value == "") ? calculate() : afficherDroite();
+}
 
 let cercle=document.getElementById("cercle");
 let coeur=document.getElementById("coeur");
