@@ -16,7 +16,7 @@ function afficherDroite(){
     let coordonnees=document.getElementById("coordonnees").value;
     console.log(coordonnees);
     let StringofPoint=coordonnees;
-    let reg=new RegExp("[ ,;]+", "g");
+    let reg=new RegExp("[ ,;]+", "g"); //A revoir , faudra recup les points ecris de manière (A,B)(C,D) etc etc 
     let tableau=StringofPoint.split(reg);
     console.log(tableau);
     if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
