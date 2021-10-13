@@ -1,16 +1,4 @@
-<<<<<<< HEAD
 let button_coordonnees=document.getElementById("1")
-=======
-const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
-    linewidth: 0.05,
-    color: 0x0000FF
-})
-const droite = []; // Tableau de points pour la droite
-
-let coordonnees=document.getElementById("coordonnees");
-
-let button_coordonnees=document.getElementById("coordonnees")
->>>>>>> a42917a7ccded096e90e2b145fe185c51bd7e2e3
 button_coordonnees.addEventListener("click",afficherDroite);
 
 
