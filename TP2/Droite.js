@@ -16,12 +16,10 @@ function afficherDroite(){
     let coordonnees=document.getElementById("coordonnees").value;
     console.log(coordonnees);
     let StringofPoint=coordonnees;
-    let reg=new RegExp("[ ,;]+", "g"); //A revoir , faudra recup les points ecris de manière (A,B)(C,D) etc etc 
-    let tableau=StringofPoint.split(reg);
+    let tableau=StringofPoint.split(' ');
     console.log(tableau);
     if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
     const geometry = new THREE.BufferGeometry().setFromPoints(droite);  // On ajoute au buffer
-    
     const figure = new THREE.Line( geometry, line );
     scene.add( figure ); // on ajoute à la scène tous les droites
     
