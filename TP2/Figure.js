@@ -10,13 +10,7 @@ const material = new THREE.PointsMaterial({ //définition taille et couleurs des
     color: 0x7CFC00
 });
 
-const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
-    size: 0.05,
-    color: 0x0000FF
-})
-
 const points = []; // tableau de points
-const droite = []; // Tableau de points pour la droite
 
 renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
 {
