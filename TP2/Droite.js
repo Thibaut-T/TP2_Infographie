@@ -2,7 +2,7 @@ const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des 
     linewidth: 0.05,
     color: 0x0000FF
 })
-const droite = [new THREE.Vector3(0,0,0), new THREE.Vector3(-15, 3.8, 0)]; // Tableau de points pour la droite
+const droite = []; // Tableau de points pour la droite
 
 let coordonnees=document.getElementById("coordonnees");
 
@@ -25,18 +25,18 @@ function afficherDroite(){
     let tableau=StringofPoint.split(' ');
     console.log(tableau[0]);
     for(let i=0;i<tableau.length;i++){
-        droite.push(new THREE.Vector3(tableau[i],tableau[i+1], 0 ) );
-        console.log(droite[droite.length-1]); // PROOOOOOOBLEME
+        droite.push(new THREE.Vector3(eval(tableau[i]),eval(tableau[i+1], 0 )) );
+        console.log(droite[droite.length-1]);
         i++;
     }
     
-    console.log(THREE.Vector3);
+    console.log(droite);
     afficherCourbe(droite);
-   /* if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
+    if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
     const geometry = new THREE.BufferGeometry().setFromPoints(droite);  // On ajoute au buffer
     const figure = new THREE.Line( geometry, line );
     scene.add( figure ); // on ajoute à la scène tous les droites
     
     camera.position.z = 5;
-    renderer.render( scene, camera );*/
+    renderer.render( scene, camera );
 }
