@@ -29,14 +29,19 @@ function afficherDroite(){
         console.log(droite[droite.length-1]);
         i++;
     }
-    
     console.log(droite);
-    afficherCourbe(droite);
+    //afficherCourbe(droite);
     if(droite.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
     const geometry = new THREE.BufferGeometry().setFromPoints(droite);  // On ajoute au buffer
     const figure = new THREE.Line( geometry, line );
     scene.add( figure ); // on ajoute à la scène tous les droites
-    
     camera.position.z = 5;
     renderer.render( scene, camera );
+}
+
+function Decasteljau(pdc){
+    let pointBezier=[];
+    for(i=0;i<pdc.length;i++){
+        pointBezier[i]=pdc[i];
+    }
 }
