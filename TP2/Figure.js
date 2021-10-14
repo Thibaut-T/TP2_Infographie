@@ -67,13 +67,13 @@ function calculate(){
         points.push( new THREE.Vector3( evaluate(t,x), evaluate(t,y), 0 ) );
     }
     
-    afficherCourbe(points);
+    afficherPoints(points);
 }
 
 /**
  * Affiche les points de la courbe paramétrique
  */
-function afficherCourbe(tab){
+function afficherPoints(tab){
     const geometry = new THREE.BufferGeometry().setFromPoints( tab );
     
     const figure = new THREE.Points( geometry, material );
