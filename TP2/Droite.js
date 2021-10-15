@@ -9,14 +9,26 @@ let coordonnees=document.getElementById("coordonnees");
 let button_coordonnees=document.getElementById("1");
 button_coordonnees.addEventListener("click",afficherDroite);
 
+/**
+ * Take the position of the mouse at the moment of clicking and then calculate the Bézier curve with the Casteljau algorithm.
+ * @param {*} canvas 
+ * @param {*} event 
+ */
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
     let Xaxis = distance * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2);
     let Yaxis = distance * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2));
     droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
+    reset();
     afficherDroite(droite);
+    casteljau(droite);
 }
 
+/**
+ * Draw lines between the points in the table. Show blue lines and green dots
+ * @param {Array} tab 
+ * @returns 
+ */
 function afficherDroite(tab){
     
     if(tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
@@ -29,6 +41,9 @@ function afficherDroite(tab){
     afficherPoints(tab);
 }
 
+/**
+ * Read the coordinate input and calculate the Bézier curve with the Casteljau algorithm.
+ */
 function takeCoordonnees(){
     let coordonnees=document.getElementById("coordonnees").value;
     let StringofPoint=coordonnees;
@@ -37,10 +52,17 @@ function takeCoordonnees(){
         droite.push(new THREE.Vector3(eval(tableau[i]),eval(tableau[i+1], 0 )) );
         i++;
     }
+    reset();
     afficherDroite(droite);
     casteljau(droite);
 }
 
+/**
+ * Calculates the barycentre of the lines in the table and returns the point of the Bézier curve
+ * @param {array} tab 
+ * @param {integer} poids 
+ * @returns {THREE.Vector3}
+ */
 function barycentre(tab, poids){
     if(tab.length == 1) return tab[0];
     let tabi = [];
@@ -50,6 +72,10 @@ function barycentre(tab, poids){
     return barycentre(tabi, poids);
 }
 
+/**
+ * Calculates and display Bézier curve with Casteljau algorithm
+ * @param {array} tab 
+ */
 function casteljau(tab){
     let tabPoints = [];
 
@@ -58,4 +84,5 @@ function casteljau(tab){
     }
     
     afficherPoints(tabPoints);
+    afficherPoints(points);
 }

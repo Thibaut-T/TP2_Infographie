@@ -19,7 +19,7 @@ renderer.domElement.addEventListener("click", function(e) //Add event to our can
 });
 
 let button_reset=document.getElementById("reset");
-button_reset.addEventListener("click",reset);
+button_reset.addEventListener("click",resetButton);
 
 
 let button = document.getElementById("valider");
@@ -35,9 +35,22 @@ let coeur=document.getElementById("coeur");
 cercle.addEventListener("click",drawCircle);
 coeur.addEventListener("click",drawHeart);
 
+/**
+ * Reset canvas, points and droite array
+ */
+function resetButton(){
+    reset();
+    points.splice(0, points.length);
+    droite.splice(0, droite.length);
+}
 
+/**
+ * Reset canvas
+ */
 function reset(){
-    document.location.reload(true);
+    scene.children.splice(0, scene.children.length);
+    camera.position.z = distance;
+    renderer.render( scene, camera );
 }
 
 function drawCircle(){
@@ -45,6 +58,7 @@ function drawCircle(){
     coordX.setAttribute('value',"cos(t)");
     let coordY=document.getElementById("Y");
     coordY.setAttribute('value',"sin(t)"); 
+    calculate();
 }
 
 function drawHeart(){
@@ -52,6 +66,7 @@ function drawHeart(){
     coord2X.setAttribute('value',"pow(sin(t), 3)");
     let coord2Y=document.getElementById("Y");
     coord2Y.setAttribute('value',"cos(t)-pow(cos(t),4)"); 
+    calculate();
 }
 
 /**
