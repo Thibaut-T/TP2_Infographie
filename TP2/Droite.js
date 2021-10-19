@@ -84,7 +84,7 @@ function createTable(tab){
         ligne.style.height="23px";
         let label = document.createElement("Label");
         label.style.padding="0 5px 0 5px";
-        label.style.width="29%";
+        label.style.width="40%";
         label.setAttribute("for",j);
         label.innerHTML = "Point "+ (j+1)+":";
         form.appendChild(label);
