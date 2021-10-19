@@ -42,7 +42,10 @@ function resetButton(){
     reset();
     points.splice(0, points.length);
     droite.splice(0, droite.length);
-    
+    document.getElementById("change").style.display="none";
+    if(document.getElementById("ListOfPoints").children.length == 2){
+        document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
+    }
 }
 
 /**
