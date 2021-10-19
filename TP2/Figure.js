@@ -42,6 +42,7 @@ function resetButton(){
     reset();
     points.splice(0, points.length);
     droite.splice(0, droite.length);
+    
 }
 
 /**
