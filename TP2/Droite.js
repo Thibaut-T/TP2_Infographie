@@ -24,6 +24,9 @@ function getMousePosition(canvas, event) {
     reset();
     afficherDroite(droite);
     casteljau(droite);
+    if(document.getElementById("ListOfPoints").children.length == 2){
+        document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
+    }
     createTable(tableau);
 }
 
@@ -64,6 +67,9 @@ function takeCoordonnees(){
     reset();
     afficherDroite(droite);
     casteljau(droite);
+    if(document.getElementById("ListOfPoints").children.length == 2){
+        document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
+    }
     createTable(finalTable);
 }
 
