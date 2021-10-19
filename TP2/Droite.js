@@ -19,9 +19,12 @@ function getMousePosition(canvas, event) {
     let Xaxis = distance * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2);
     let Yaxis = distance * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2));
     droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
+    let tableau = [];
+    droite.forEach(elem => tableau.push(Math.round(elem.x * 100) / 100, Math.round(elem.y * 100) / 100));
     reset();
     afficherDroite(droite);
     casteljau(droite);
+    createTable(tableau);
 }
 
 /**
