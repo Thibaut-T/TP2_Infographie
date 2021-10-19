@@ -61,10 +61,15 @@ function takeCoordonnees(){
 function createTable(tab){
         let form1=document.getElementById("ListOfPoints");
         let form = document.createElement("form");
+        form.style.display="flex";
+        form.style.flex="row";
         form1.appendChild(form); 
         let j=0
     for(let i=0;i<tab.length;i++){
         let ligne = document.createElement("input");
+        ligne.setAttribute("class","form-control");
+        ligne.style.display="flex";
+        ligne.style.flexDirection="row";
         ligne.setAttribute("type", "input");
         ligne.setAttribute("name", "Point".i);
         ligne.setAttribute("label", "Point".i);
@@ -72,7 +77,7 @@ function createTable(tab){
         ligne.setAttribute("id", j);
         ligne.style.height="23px";
         let label = document.createElement("Label");
-        label.style.paddingLeft="5px";
+        label.style.padding="0 5px 0 5px";
         label.setAttribute("for",j);
         label.innerHTML = "Point "+ (j+1);
         form.appendChild(label);
@@ -80,6 +85,7 @@ function createTable(tab){
         i++,j++;
     }
     let btnchange=document.getElementById("change");
+    btnchange.style.display="block";
     btnchange.addEventListener("click", () => {
         changePoints(tab);
     });
