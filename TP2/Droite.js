@@ -48,14 +48,20 @@ function takeCoordonnees(){
     let coordonnees=document.getElementById("coordonnees").value;
     let StringofPoint=coordonnees;
     let tableau=StringofPoint.split(' ');
+    let finalTable = [];
     for(let i=0;i<tableau.length;i++){
-        droite.push(new THREE.Vector3(eval(tableau[i]),eval(tableau[i+1], 0 )) );
-        i++;
+        console.log(tableau[i]);
+        if(tableau[i].includes(';')){
+            let coord = tableau[i].split(';');
+            droite.push(new THREE.Vector3(eval(coord[0]),eval(coord[1], 0 )) );
+            console.log(coord);
+            finalTable.push(coord[0], coord[1]);
+        }
     }
     reset();
     afficherDroite(droite);
     casteljau(droite);
-    createTable(tableau);
+    createTable(finalTable);
 }
 
 function createTable(tab){
@@ -68,7 +74,7 @@ function createTable(tab){
         ligne.setAttribute("type", "input");
         ligne.setAttribute("name", "Point".i);
         ligne.setAttribute("label", "Point".i);
-        ligne.setAttribute("placeholder", tab[i]+';'+tab[i+1]);
+        ligne.value = tab[i]+';'+tab[i+1];
         ligne.setAttribute("id", j);
         ligne.style.height="23px";
         let label = document.createElement("Label");
@@ -86,18 +92,21 @@ function createTable(tab){
 }
 
 function changePoints(tab){
+    reset();
     console.log(tab);
     let x=0
     let newTab=[];
     for(let j=0;j<tab.length;j++){
         console.log(document.getElementById(x).value)
-        let tableau=(document.getElementById(x).value).split(' ');
+        let tableau=(document.getElementById(x).value).split(';');
         console.log(tableau[x]);
         newTab.push(new THREE.Vector3(eval(tableau[0]),eval(tableau[1]), 0 ));
         x++
         j++;
     }
-    calculate(newTab);
+    reset();
+    afficherDroite(newTab);
+    casteljau(newTab);
 }
 /**
  * Calculates the barycentre of the lines in the table and returns the point of the Bézier curve
@@ -105,9 +114,6 @@ function changePoints(tab){
  * @param {integer} poids 
  * @returns {THREE.Vector3}
  */
-
-
-
 function barycentre(tab, poids){
     if(tab.length == 1) return tab[0];
     let tabi = [];
