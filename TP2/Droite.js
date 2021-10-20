@@ -171,10 +171,11 @@ function casteljau(tab){
 function more(){
     refresh();
     let t = document.getElementById("poids");
-    let val = eval(t.innerHTML.substr(9));
+    let val = eval(t.innerHTML.substr(8));
+    console.log(t, t.innerHTML.substr(8), val, val<1);
     if(val < 1){
-        val = Math.trunc((val * 100) + 5)/100;
-        t.innerHTML = "Poids : "+val;
+        val = ((val * 100) + 5)/100;
+        t.innerHTML = "Poids : "+val.toFixed(2);
         barycentre(droite, val, true);
     }
 }
@@ -182,10 +183,10 @@ function more(){
 function less(){
     refresh();
     let t = document.getElementById("poids");
-    let val = eval(t.innerHTML.substr(9));
+    let val = eval(t.innerHTML.substr(8));
     if(val > 0){
-        val = Math.trunc((val * 100) - 5)/100;
-        t.innerHTML = "Poids : "+val;
+        val = ((val * 100) - 5)/100;
+        t.innerHTML = "Poids : "+val.toFixed(2);
         barycentre(droite, val, true);
     }
 }

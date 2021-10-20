@@ -44,7 +44,7 @@ function resetButton(){
     droite.splice(0, droite.length);
     document.getElementById("change").style.display="none";
     document.getElementById("weight").style.display="none";
-    document.getElementById("poids").innerHTML = "Poids : 0.0";
+    document.getElementById("poids").innerHTML = "Poids : 0.00";
     if(document.getElementById("ListOfPoints").children.length == 2){
         document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
     }
