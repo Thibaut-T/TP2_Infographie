@@ -19,15 +19,7 @@ function getMousePosition(canvas, event) {
     let Xaxis = distance * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2);
     let Yaxis = distance * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2));
     droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
-    let tableau = [];
-    droite.forEach(elem => tableau.push(Math.round(elem.x * 100) / 100, Math.round(elem.y * 100) / 100));
-    reset();
-    afficherDroite(droite);
-    casteljau(droite);
-    if(document.getElementById("ListOfPoints").children.length == 2){
-        document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
-    }
-    createTable(tableau);
+    majAffichage();
 }
 
 /**
@@ -54,16 +46,18 @@ function takeCoordonnees(){
     let coordonnees=document.getElementById("coordonnees").value;
     let StringofPoint=coordonnees;
     let tableau=StringofPoint.split(' ');
-    let finalTable = [];
     for(let i=0;i<tableau.length;i++){
-        console.log(tableau[i]);
         if(tableau[i].includes(';')){
             let coord = tableau[i].split(';');
             droite.push(new THREE.Vector3(eval(coord[0]),eval(coord[1], 0 )) );
-            console.log(coord);
-            finalTable.push(coord[0], coord[1]);
         }
     }
+    majAffichage();
+}
+
+function majAffichage(){
+    let finalTable = [];
+    droite.forEach(elem => finalTable.push(Math.round(elem.x * 100) / 100, Math.round(elem.y * 100) / 100));
     reset();
     afficherDroite(droite);
     casteljau(droite);
@@ -108,14 +102,10 @@ function createTable(tab){
 }
 
 function changePoints(tab){
-    reset();
-    console.log(tab);
     let x=0
     let newTab=[];
     for(let j=0;j<tab.length;j++){
-        console.log(document.getElementById(x).value)
         let tableau=(document.getElementById(x).value).split(';');
-        console.log(tableau[x]);
         newTab.push(new THREE.Vector3(eval(tableau[0]),eval(tableau[1]), 0 ));
         x++
         j++;
