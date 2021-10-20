@@ -11,7 +11,7 @@ const material = new THREE.PointsMaterial({ //définition taille et couleurs des
 });
 
 const points = []; // tableau de points
-const distance = 10; //point de la caméra
+let distance = 10; //point de la caméra
 
 renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
 {

@@ -20,6 +20,18 @@ let btnMore = document.getElementById("+");
 btnMore.addEventListener("click", more);
 let btnLess = document.getElementById("-");
 btnLess.addEventListener("click", less);
+let btnZoomIn = document.getElementById("zoomIn");
+btnZoomIn.addEventListener("click", ()=> {
+    distance--;
+    camera.position.z = distance;
+    renderer.render( scene, camera );
+})
+let btnZoomOut = document.getElementById("zoomOut");
+btnZoomOut.addEventListener("click", () => {
+    distance++;
+    camera.position.z = distance;
+    renderer.render( scene, camera );
+})
 
 /**
  * Take the position of the mouse at the moment of clicking and then calculate the Bézier curve with the Casteljau algorithm.
