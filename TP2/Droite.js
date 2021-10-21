@@ -22,14 +22,39 @@ let btnLess = document.getElementById("-");
 btnLess.addEventListener("click", less);
 let btnZoomIn = document.getElementById("zoomIn");
 btnZoomIn.addEventListener("click", ()=> {
-    distance--;
-    camera.position.z = distance;
+    cam.z--;
+    camera.position.z = cam.z;
     renderer.render( scene, camera );
 })
 let btnZoomOut = document.getElementById("zoomOut");
 btnZoomOut.addEventListener("click", () => {
-    distance++;
-    camera.position.z = distance;
+    cam.z++;
+    camera.position.z = cam.z;
+    renderer.render( scene, camera );
+})
+let btnMoveLeft = document.getElementById("left");
+btnMoveLeft.addEventListener("click", () => {
+    cam.x++;
+    camera.position.x = cam.x;
+    console.log(camera.position, cam);
+    renderer.render( scene, camera );
+})
+let btnMoveRight = document.getElementById("right");
+btnMoveRight.addEventListener("click", () => {
+    cam.x--;
+    camera.position.x = cam.x;
+    renderer.render( scene, camera );
+})
+let btnMoveDown = document.getElementById("down");
+btnMoveDown.addEventListener("click", () => {
+    cam.y++;
+    camera.position.y = cam.y;
+    renderer.render( scene, camera );
+})
+let btnMoveUp = document.getElementById("up");
+btnMoveUp.addEventListener("click", () => {
+    cam.y--;
+    camera.position.y = cam.y;
     renderer.render( scene, camera );
 })
 
@@ -40,8 +65,8 @@ btnZoomOut.addEventListener("click", () => {
  */
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
-    let Xaxis = distance * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2);
-    let Yaxis = distance * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2));
+    let Xaxis = (cam.z * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2))+cam.x;
+    let Yaxis = (cam.z * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2)))+cam.y;
     droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
     majCasteljau();
 }
@@ -58,8 +83,10 @@ function afficherDroite(tab, material = line){
     const geometry = new THREE.BufferGeometry().setFromPoints(tab);  // On ajoute au buffer
     const figure = new THREE.Line( geometry, material );
     scene.add( figure ); // on ajoute à la scène tous les droites
-    
-    camera.position.z = distance;
+
+    camera.position.x = cam.x;
+    camera.position.y = cam.y;
+    camera.position.z = cam.z;
     renderer.render( scene, camera );
     afficherPoints(tab);
 }
@@ -172,7 +199,6 @@ function more(){
     refresh();
     let t = document.getElementById("poids");
     let val = eval(t.innerHTML.substr(8));
-    console.log(t, t.innerHTML.substr(8), val, val<1);
     if(val < 1){
         val = ((val * 100) + 5)/100;
         t.innerHTML = "Poids : "+val.toFixed(2);

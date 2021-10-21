@@ -11,7 +11,7 @@ const material = new THREE.PointsMaterial({ //définition taille et couleurs des
 });
 
 const points = []; // tableau de points
-let distance = 10; //point de la caméra
+let cam = new THREE.Vector3(0,0,10);//point de la caméra
 
 renderer.domElement.addEventListener("click", function(e) //Add event to our canvas 
 {
@@ -40,6 +40,10 @@ coeur.addEventListener("click",drawHeart);
  */
 function resetButton(){
     reset();
+    cam = new THREE.Vector3(0,0,10);
+    camera.position.x = cam.x;
+    camera.position.y = cam.y;
+    camera.position.z = cam.z;
     points.splice(0, points.length);
     droite.splice(0, droite.length);
     document.getElementById("change").style.display="none";
@@ -55,7 +59,6 @@ function resetButton(){
  */
 function reset(){
     scene.children.splice(0, scene.children.length);
-    camera.position.z = distance;
     renderer.render( scene, camera );
 }
 
@@ -99,7 +102,9 @@ function afficherPoints(tab){
     
     const figure = new THREE.Points( geometry, material );
     scene.add( figure ); // on ajoute à la scène tous les points
-    camera.position.z = distance;
+    camera.position.x = cam.x;
+    camera.position.y = cam.y;
+    camera.position.z = cam.z;
     renderer.render( scene, camera );
 }
 
