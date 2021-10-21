@@ -9,56 +9,12 @@ const stepByStep = new THREE.LineBasicMaterial({ //définition taille et couleur
 })
 
 const droite = []; // Tableau de points pour la droite
-const casteljauPoints = []; // Tableau de points pour la courbe avec l'olgo de Casteljau
 
 
 /*let btnMore = document.getElementById("+");
 btnMore.addEventListener("click", more);
 let btnLess = document.getElementById("-");
 btnLess.addEventListener("click", less);*/
-let poids = document.getElementById("poids");
-poids.addEventListener("input", weight);
-let btnZoomIn = document.getElementById("zoomIn");
-btnZoomIn.addEventListener("click", ()=> {
-    cam.z--;
-    camera.position.z = cam.z;
-    renderer.render( scene, camera );
-})
-let btnZoomOut = document.getElementById("zoomOut");
-btnZoomOut.addEventListener("click", () => {
-    cam.z++;
-    camera.position.z = cam.z;
-    renderer.render( scene, camera );
-})
-let btnMoveLeft = document.getElementById("left");
-btnMoveLeft.addEventListener("click", () => {
-    cam.x++;
-    camera.position.x = cam.x;
-    renderer.render( scene, camera );
-})
-let btnMoveRight = document.getElementById("right");
-btnMoveRight.addEventListener("click", () => {
-    cam.x--;
-    camera.position.x = cam.x;
-    renderer.render( scene, camera );
-})
-let btnMoveDown = document.getElementById("down");
-btnMoveDown.addEventListener("click", () => {
-    cam.y++;
-    camera.position.y = cam.y;
-    renderer.render( scene, camera );
-})
-let btnMoveUp = document.getElementById("up");
-btnMoveUp.addEventListener("click", () => {
-    cam.y--;
-    camera.position.y = cam.y;
-    renderer.render( scene, camera );
-})
-
-
-let translation = document.getElementById("trans");
-translation.addEventListener("input", transformation);
-
 
 let homothetie = document.getElementById("homot");
 homothetie.addEventListener("input", transformation);
@@ -118,15 +74,7 @@ function takeCoordonnees(){
     majCasteljau();
 }
 
-function majCasteljau(){
-    let finalTable = [];
-    droite.forEach(elem => finalTable.push(Math.round(elem.x * 100) / 100, Math.round(elem.y * 100) / 100));
-    casteljau(droite);
-    if(document.getElementById("ListOfPoints").children.length == 2){
-        document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
-    }
-    createTable(finalTable);
-}
+
 
 function createTable(tab){
         let form1=document.getElementById("ListOfPoints");
@@ -180,41 +128,6 @@ function changePoints(tab){
  * @param {integer} poids 
  * @returns {THREE.Vector3}
  */
-function barycentre(tab, poids, print){
-    if(tab.length == 1) return tab[0];
-    let tabi = [];
-    for(let i = 0; i < tab.length-1; i++){
-        tabi.push(new THREE.Vector3((1-poids) * tab[i].x + poids * tab[i+1].x, (1-poids) * tab[i].y + poids * tab[i+1].y, 0));
-    }
-    if(print){
-        afficherDroite(tabi, stepByStep);
-        afficherPoints(tabi);
-    }
-    return barycentre(tabi, poids, print);
-}
-
-/**
- * Calculates and display Bézier curve with Casteljau algorithm
- * @param {array} tab 
- */
-function casteljau(tab){
-    casteljauPoints.splice(0, casteljauPoints.length);
-
-    for(let t = 0; t < 1; t+=0.001){
-        casteljauPoints.push(barycentre(tab, t, false));
-    }
-    refresh();
-}
-
-function weight(){
-    refresh();
-    let val = eval(document.getElementById("poids").value);
-    if(val != -1 && val != 101){
-        val/=100;
-        document.getElementById("poidsVal").innerHTML = val.toFixed(2);
-        barycentre(droite, val, true);
-    }
-}
 
 function refresh(){
     reset();
@@ -223,6 +136,9 @@ function refresh(){
     afficherPoints(casteljauPoints);
     afficherPoints(points);
 }
+
+let translation = document.getElementById("trans");
+translation.addEventListener("input", transformation);
 
 function transformation(){
     let transVal = eval(translation.value);
