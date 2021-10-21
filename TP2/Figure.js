@@ -29,12 +29,6 @@ function wichOne(){
     (document.getElementById("coordonnees").value == "") ? calculate() : takeCoordonnees();
 }
 
-let cercle=document.getElementById("cercle");
-let coeur=document.getElementById("coeur");
-
-cercle.addEventListener("click",drawCircle);
-coeur.addEventListener("click",drawHeart);
-
 /**
  * Reset canvas, points and droite array
  */
@@ -65,22 +59,6 @@ function resetButton(){
 function reset(){
     scene.children.splice(0, scene.children.length);
     renderer.render( scene, camera );
-}
-
-function drawCircle(){
-    let coordX=document.getElementById("X");
-    coordX.setAttribute('value',"cos(t)");
-    let coordY=document.getElementById("Y");
-    coordY.setAttribute('value',"sin(t)"); 
-    calculate();
-}
-
-function drawHeart(){
-    let coord2X=document.getElementById("X");
-    coord2X.setAttribute('value',"pow(sin(t), 3)");
-    let coord2Y=document.getElementById("Y");
-    coord2Y.setAttribute('value',"cos(t)-pow(cos(t),4)"); 
-    calculate();
 }
 
 /**
