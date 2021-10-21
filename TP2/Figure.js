@@ -40,6 +40,11 @@ coeur.addEventListener("click",drawHeart);
  */
 function resetButton(){
     reset();
+    translation.value = 0;
+    homothetie.value = 100;
+    document.getElementById("transVal").innerHTML = "0";
+    document.getElementById("homotVal").innerHTML = "1.00";
+
     cam = new THREE.Vector3(0,0,10);
     camera.position.x = cam.x;
     camera.position.y = cam.y;
@@ -88,7 +93,7 @@ function calculate(){
     y = transformString(Y.value);
 
     for(let t = 0; t < 2*Math.PI; t+=0.0001){
-        points.push( new THREE.Vector3( evaluate(t,x), evaluate(t,y), 0 ) );
+        points.push( new THREE.Vector3( evaluate(t,x) + eval(translation.value), evaluate(t,y), 0 ) );
     }
     
     afficherPoints(points);
@@ -98,7 +103,10 @@ function calculate(){
  * Affiche les points de la courbe paramétrique
  */
 function afficherPoints(tab){
-    const geometry = new THREE.BufferGeometry().setFromPoints( tab );
+
+    let newTab = [], transVal = eval(translation.value), homotVal =eval(homothetie.value);
+    tab.forEach(elem => newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal)*homotVal)/100, Math.trunc(elem.y*homotVal)/100, elem.z)));
+    const geometry = new THREE.BufferGeometry().setFromPoints( newTab );
     
     const figure = new THREE.Points( geometry, material );
     scene.add( figure ); // on ajoute à la scène tous les points

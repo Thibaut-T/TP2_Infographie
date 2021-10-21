@@ -11,15 +11,13 @@ const stepByStep = new THREE.LineBasicMaterial({ //définition taille et couleur
 const droite = []; // Tableau de points pour la droite
 const casteljauPoints = []; // Tableau de points pour la courbe avec l'olgo de Casteljau
 
-let coordonnees=document.getElementById("coordonnees");
 
-let button_coordonnees=document.getElementById("1");
-button_coordonnees.addEventListener("click",afficherDroite);
-
-let btnMore = document.getElementById("+");
+/*let btnMore = document.getElementById("+");
 btnMore.addEventListener("click", more);
 let btnLess = document.getElementById("-");
-btnLess.addEventListener("click", less);
+btnLess.addEventListener("click", less);*/
+let poids = document.getElementById("poids");
+poids.addEventListener("input", weight);
 let btnZoomIn = document.getElementById("zoomIn");
 btnZoomIn.addEventListener("click", ()=> {
     cam.z--;
@@ -36,7 +34,6 @@ let btnMoveLeft = document.getElementById("left");
 btnMoveLeft.addEventListener("click", () => {
     cam.x++;
     camera.position.x = cam.x;
-    console.log(camera.position, cam);
     renderer.render( scene, camera );
 })
 let btnMoveRight = document.getElementById("right");
@@ -58,6 +55,14 @@ btnMoveUp.addEventListener("click", () => {
     renderer.render( scene, camera );
 })
 
+
+let translation = document.getElementById("trans");
+translation.addEventListener("input", transformation);
+
+
+let homothetie = document.getElementById("homot");
+homothetie.addEventListener("input", transformation);
+
 /**
  * Take the position of the mouse at the moment of clicking and then calculate the Bézier curve with the Casteljau algorithm.
  * @param {*} canvas 
@@ -65,8 +70,9 @@ btnMoveUp.addEventListener("click", () => {
  */
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
-    let Xaxis = (cam.z * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2))+cam.x;
-    let Yaxis = (cam.z * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2)))+cam.y;
+    let transVal = eval(translation.value), homotVal =eval(homothetie.value)/100;
+    let Xaxis = ((cam.z * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2))+cam.x-transVal)/homotVal;
+    let Yaxis = ((cam.z * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2)))+cam.y)/homotVal;
     droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
     majCasteljau();
 }
@@ -80,7 +86,11 @@ function getMousePosition(canvas, event) {
 function afficherDroite(tab, material = line){
     
     if(tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
-    const geometry = new THREE.BufferGeometry().setFromPoints(tab);  // On ajoute au buffer
+
+    let newTab = [], transVal = eval(translation.value), homotVal =eval(homothetie.value);
+    tab.forEach(elem => newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal)*homotVal)/100, Math.trunc(elem.y*homotVal)/100, elem.z)));
+
+    const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
     const figure = new THREE.Line( geometry, material );
     scene.add( figure ); // on ajoute à la scène tous les droites
 
@@ -98,10 +108,11 @@ function takeCoordonnees(){
     let coordonnees=document.getElementById("coordonnees").value;
     let StringofPoint=coordonnees;
     let tableau=StringofPoint.split(' ');
+    let transVal = eval(translation.value), homotVal =eval(homothetie.value)/100;
     for(let i=0;i<tableau.length;i++){
         if(tableau[i].includes(';')){
             let coord = tableau[i].split(';');
-            droite.push(new THREE.Vector3(eval(coord[0]),eval(coord[1], 0 )) );
+            droite.push(new THREE.Vector3((eval(coord[0])-transVal)/homotVal,eval(coord[1])/homotVal, 0 ));
         }
     }
     majCasteljau();
@@ -195,31 +206,32 @@ function casteljau(tab){
     refresh();
 }
 
-function more(){
+function weight(){
     refresh();
-    let t = document.getElementById("poids");
-    let val = eval(t.innerHTML.substr(8));
-    if(val < 1){
-        val = ((val * 100) + 5)/100;
-        t.innerHTML = "Poids : "+val.toFixed(2);
-        barycentre(droite, val, true);
-    }
-}
-
-function less(){
-    refresh();
-    let t = document.getElementById("poids");
-    let val = eval(t.innerHTML.substr(8));
-    if(val > 0){
-        val = ((val * 100) - 5)/100;
-        t.innerHTML = "Poids : "+val.toFixed(2);
+    let val = eval(document.getElementById("poids").value);
+    if(val != -1 && val != 101){
+        val/=100;
+        document.getElementById("poidsVal").innerHTML = val.toFixed(2);
         barycentre(droite, val, true);
     }
 }
 
 function refresh(){
     reset();
+    
     afficherDroite(droite);
     afficherPoints(casteljauPoints);
     afficherPoints(points);
+}
+
+function transformation(){
+    let transVal = eval(translation.value);
+    let homotVal = eval(homothetie.value);
+    console.log(transVal, homotVal);
+    document.getElementById("transVal").innerHTML = transVal;
+    document.getElementById("homotVal").innerHTML = homotVal/100;
+    for(let i = 0; i < droite.length; i++){
+        document.getElementById(i).value = (Math.trunc((droite[i].x+transVal)*homotVal))/100+";"+ (Math.trunc((droite[i].y)*homotVal)/100);
+    }
+    refresh();
 }

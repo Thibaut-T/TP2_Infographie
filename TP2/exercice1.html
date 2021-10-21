@@ -60,9 +60,9 @@
 					style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M72.39453,11.00196l-7.72656,7.55859l60.84668,62.06445l-60.84668,62.10645l7.72656,7.4746l68.15332,-69.58105z"></path></g></g></svg></button>
 			</div>
 			<div id="weight" class="col" style="margin-right: 0; width: 100px; display: none;">
-				<label id="poids">Poids : 0.00</label>
-				<button id="+" class ="btn btn-success btn-sm">+</button> 
-				<button id="-" class ="btn btn-danger btn-sm">-</button>
+				<p>Poids : </p>
+  				<input id="poids" type="range" min="-1" max="101" value="0">
+				<p id="poidsVal">0.00</p>
 			</div>
 		</div>
 		<br>
@@ -72,9 +72,6 @@
 				<button type="submit" class="btn btn-primary" id="valider" style="margin-left:35%;margin-bottom: 2%;">Valider</button>
 			</div>
 			<div class="col">
-				<button type="button" class="btn btn-warning" id="1" style="margin-left:35%;">Droite</button>
-			</div>
-			<div class="col">
 				<button type="button" class="btn btn-secondary" id="coeur" style="margin-left:35%;margin-bottom: 2%;">Coeur</button>
 			</div>
 			<div class="col">
@@ -82,6 +79,18 @@
 			</div>
 			<div class="col">
 				<button type="button" class="btn btn-danger" id="reset" style="margin-left:35%;">Reset</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>Translation : </p>
+  				<input id="trans" type="range" min="-10" max="10" value="0">
+				<p id="transVal">0</p>
+			</div>
+			<div class="col">
+				<p>Homothétie : </p>
+  				<input id="homot" type="range" min="0" max="1000" value="100">
+				<p id="homotVal">1.00</p>
 			</div>
 		</div>
 		<script src="three.js"></script>
