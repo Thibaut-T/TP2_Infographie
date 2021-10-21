@@ -1,96 +1,153 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>TP 2</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/fontawesome.min.css" integrity="sha512-Rcr1oG0XvqZI1yv1HIg9LgZVDEhf2AHjv+9AuD1JXWGLzlkoKDVvE925qySLcEywpMAYA/rkg296MkvqBF07Yw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<style>
-			input { width: 50px; margin-left: 10px; border: solid black 2px; height: 5px;};
-		</style>
-	</head>
-	<body>
-		
-		<h3 style="text-align:center; text-decoration: underline;">Entrez vos équations paramètriques :</h3>
-		<div class="row">
-			<div class="col">
-				<label for="X" style="margin-left:10px; width:100px;"  >X(t):</label>
-				<input class="form-control" type="text" name="X" placeholder="Votre valeur de X" id="X">
-			</div>
-			<div class="col">
-				<label for="Y" style="margin-left:10px" >Y(t):</label>
-				<input class="form-control" type="text" name="Y" placeholder="Votre valeur de Y" id="Y">
-			</div>
-			<div class="col">
-			<label for="coordonneesX" style="margin-left:10px" >Coordonnées:</label>
-			<input class="form-control" type="text" name="coordonnees" placeholder="Coordonnées d'un point : x1;y1 ... xn;yn" id="coordonnees">
-			</div>
+
+<head>
+	<meta charset="utf-8">
+	<title>TP 2</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/fontawesome.min.css"
+		integrity="sha512-Rcr1oG0XvqZI1yv1HIg9LgZVDEhf2AHjv+9AuD1JXWGLzlkoKDVvE925qySLcEywpMAYA/rkg296MkvqBF07Yw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<style>
+		input {
+			width: 50px;
+			margin-left: 10px;
+			border: solid black 2px;
+			height: 5px;
+		}
+
+		;
+	</style>
+</head>
+
+<body>
+
+	<h3 style="text-align:center; text-decoration: underline;">Entrez vos équations paramètriques :</h3>
+	<div class="row">
+		<div class="col">
+			<label for="X" style="margin-left:10px; width:100px;">X(t):</label>
+			<input class="form-control" type="text" name="X" placeholder="Votre valeur de X" id="X">
 		</div>
-		<div class="row" style="padding-top:10px; padding-left: 10px;">
-			<div id="ListOfPoints" style="padding-left: 10px;">
-				<button type="button" class="btn btn-success" id="change" style="margin-left:5px;margin-bottom:5px; display:none">Change</button>
-			</div>
+		<div class="col">
+			<label for="Y" style="margin-left:10px">Y(t):</label>
+			<input class="form-control" type="text" name="Y" placeholder="Votre valeur de Y" id="Y">
 		</div>
-		<div class="row" style="padding-top:10px; padding-left: 10px;">
-			<div class=col>
-				<label>Zoom</label>
-				<button id="zoomIn" class ="btn btn-success btn-sm">+</button> 
-				<button id="zoomOut" class ="btn btn-danger btn-sm">-</button>
-			</div>
-			<div class="col">
-				<button id="left" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-					width="16" height="16"
-					viewBox="0 0 172 172"
-					style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M99.60547,11.00196l-68.15332,69.62304l68.15332,69.58105l7.72656,-7.4746l-60.84668,-62.10645l60.84668,-62.06445z"></path></g></g></svg></button>
-				<button id="up" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-					width="16" height="16"
-					viewBox="0 0 172 172"
-					style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M80.625,31.45215l-69.62304,68.15332l7.55859,7.72656l62.06445,-60.84668l62.10645,60.84668l7.4746,-7.72656z"></path></g></g></svg></button>
-				<button id="down" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-					width="16" height="16"
-					viewBox="0 0 172 172"
-					style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M18.56055,43.16797l-7.55859,7.72656l69.62304,68.15332l69.58105,-68.15332l-7.4746,-7.72656l-62.10645,60.84668z"></path></g></g></svg></button>
-				<button id="right" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-					width="16" height="16"
-					viewBox="0 0 172 172"
-					style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M72.39453,11.00196l-7.72656,7.55859l60.84668,62.06445l-60.84668,62.10645l7.72656,7.4746l68.15332,-69.58105z"></path></g></g></svg></button>
-			</div>
-			<div id="weight" class="col" style="margin-right: 0; width: 100px; display: none;">
-				<label for="poids">Poids: </label>
-				<input id="poids" type="range" min="-1" max="101" value="0" oninput="ageOutputId.value = poids.value">
-				<output name="ageOutputName" id="ageOutputId"></output>
-				<!--<p id="poidsVal">0.00</p>-->
-			</div>
+		<div class="col">
+			<label for="coordonneesX" style="margin-left:10px">Coordonnées:</label>
+			<input class="form-control" type="text" name="coordonnees"
+				placeholder="Coordonnées d'un point : x1;y1 ... xn;yn" id="coordonnees">
 		</div>
-		<br>
-		<div class="row" style="padding-left:10px;">
-			<div class="col">
-				<p>Translation : </p>
-  				<input id="trans" type="range" min="-10" max="10" value="0">
-				<p id="transVal">0</p>
-			</div>
-			<div class="col">
-				<p>Homothétie : </p>
-  				<input id="homot" type="range" min="0" max="1000" value="100">
-				<p id="homotVal">1.00</p>
-			</div>
+	</div>
+	<div class="row" style="padding-top:10px; padding-left: 10px;">
+		<div id="ListOfPoints" style="padding-left: 10px;">
+			<button type="button" class="btn btn-success" id="change"
+				style="margin-left:5px;margin-bottom:5px; display:none">Change</button>
 		</div>
-		<div class="row">
-			<div class="col">
-				<button type="submit" class="btn btn-primary" id="valider" style="margin-left:35%;margin-bottom: 2%;">Valider</button>
-			</div>
-			<div class="col">
-				<button type="button" class="btn btn-danger" id="reset" style="margin-left:35%;">Reset</button>
-			</div>
+	</div>
+	<div class="row" style="padding-top:10px; padding-left: 10px;">
+		<div class=col>
+			<label>Zoom</label>
+			<button id="zoomIn" class="btn btn-success btn-sm">+</button>
+			<button id="zoomOut" class="btn btn-danger btn-sm">-</button>
 		</div>
-		<script src="three.js"></script>
-		<script src="Droite.js"></script>
-		<script src="Figure.js"></script>
-		<script src="casteljeu.js"></script>
-		<script src="moove.js"></script>
-		<script src="transformation.js"></script>
-		<script src="weight.js"></script>
-		<script src="zoom.js"></script>
-	</body>
-	<!--<a href="https://icons8.com/icon/45324/arrière">Arrière icon by Icons8</a>-->
+		<div class="col">
+			<button id="left" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					width="16" height="16" viewBox="0 0 172 172" style=" fill:#000000;">
+					<g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+						stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+						font-family="none" font-weight="none" font-size="none" text-anchor="none"
+						style="mix-blend-mode: normal">
+						<path d="M0,172v-172h172v172z" fill="none"></path>
+						<g fill="#ffffff">
+							<path
+								d="M99.60547,11.00196l-68.15332,69.62304l68.15332,69.58105l7.72656,-7.4746l-60.84668,-62.10645l60.84668,-62.06445z">
+							</path>
+						</g>
+					</g>
+				</svg></button>
+			<button id="up" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					width="16" height="16" viewBox="0 0 172 172" style=" fill:#000000;">
+					<g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+						stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+						font-family="none" font-weight="none" font-size="none" text-anchor="none"
+						style="mix-blend-mode: normal">
+						<path d="M0,172v-172h172v172z" fill="none"></path>
+						<g fill="#ffffff">
+							<path
+								d="M80.625,31.45215l-69.62304,68.15332l7.55859,7.72656l62.06445,-60.84668l62.10645,60.84668l7.4746,-7.72656z">
+							</path>
+						</g>
+					</g>
+				</svg></button>
+			<button id="down" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					width="16" height="16" viewBox="0 0 172 172" style=" fill:#000000;">
+					<g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+						stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+						font-family="none" font-weight="none" font-size="none" text-anchor="none"
+						style="mix-blend-mode: normal">
+						<path d="M0,172v-172h172v172z" fill="none"></path>
+						<g fill="#ffffff">
+							<path
+								d="M18.56055,43.16797l-7.55859,7.72656l69.62304,68.15332l69.58105,-68.15332l-7.4746,-7.72656l-62.10645,60.84668z">
+							</path>
+						</g>
+					</g>
+				</svg></button>
+			<button id="right" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+					width="16" height="16" viewBox="0 0 172 172" style=" fill:#000000;">
+					<g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+						stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+						font-family="none" font-weight="none" font-size="none" text-anchor="none"
+						style="mix-blend-mode: normal">
+						<path d="M0,172v-172h172v172z" fill="none"></path>
+						<g fill="#ffffff">
+							<path
+								d="M72.39453,11.00196l-7.72656,7.55859l60.84668,62.06445l-60.84668,62.10645l7.72656,7.4746l68.15332,-69.58105z">
+							</path>
+						</g>
+					</g>
+				</svg></button>
+		</div>
+		<div id="weight" class="col" style="margin-right: 0; width: 100px; display: none;">
+			<label for="poids">Poids: </label>
+			<input id="poids" type="range" min="-1" max="101" value="0" oninput="ageOutputId.value = poids.value">
+			<output name="ageOutputName" id="ageOutputId"></output>
+			<!--<p id="poidsVal">0.00</p>-->
+		</div>
+	</div>
+	<br>
+	<div class="row" style="padding-left:10px;">
+		<div class="col">
+			<p>Translation : </p>
+			<input id="trans" type="range" min="-10" max="10" value="0">
+			<p id="transVal">0</p>
+		</div>
+		<div class="col">
+			<p>Homothétie : </p>
+			<input id="homot" type="range" min="0" max="1000" value="100">
+			<p id="homotVal">1.00</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<button type="submit" class="btn btn-primary" id="valider"
+				style="margin-left:35%;margin-bottom: 2%;">Valider</button>
+		</div>
+		<div class="col">
+			<button type="button" class="btn btn-danger" id="reset" style="margin-left:35%;">Reset</button>
+		</div>
+	</div>
+	<script src="three.js"></script>
+	<script src="Droite.js"></script>
+	<script src="Figure.js"></script>
+	<script src="casteljeu.js"></script>
+	<script src="moove.js"></script>
+	<script src="transformation.js"></script>
+	<script src="weight.js"></script>
+	<script src="zoom.js"></script>
+</body>
+<!--<a href="https://icons8.com/icon/45324/arrière">Arrière icon by Icons8</a>-->
+
 </html>

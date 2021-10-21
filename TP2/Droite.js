@@ -26,10 +26,10 @@ homothetie.addEventListener("input", transformation);
  */
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
-    let transVal = eval(translation.value), homotVal =eval(homothetie.value)/100;
-    let Xaxis = ((cam.z * (event.clientX - rect.left - (canvas.width/2)) * 3/(canvas.width/2))+cam.x-transVal)/homotVal;
-    let Yaxis = ((cam.z * (rect.top + (canvas.height/2) - event.clientY) * 3.8/(5* (canvas.height/2)))+cam.y)/homotVal;
-    droite.push( new THREE.Vector3( Xaxis, Yaxis, 0 ));
+    let transVal = eval(translation.value), homotVal = eval(homothetie.value) / 100;
+    let Xaxis = ((cam.z * (event.clientX - rect.left - (canvas.width / 2)) * 3 / (canvas.width / 2)) + cam.x - transVal) / homotVal;
+    let Yaxis = ((cam.z * (rect.top + (canvas.height / 2) - event.clientY) * 3.8 / (5 * (canvas.height / 2))) + cam.y) / homotVal;
+    droite.push(new THREE.Vector3(Xaxis, Yaxis, 0));
     majCasteljau();
 }
 
@@ -39,36 +39,36 @@ function getMousePosition(canvas, event) {
  * @param {new THREE.LineBasicMaterial} material
  * @returns 
  */
-function afficherDroite(tab, material = line){
-    
-    if(tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
+function afficherDroite(tab, material = line) {
 
-    let newTab = [], transVal = eval(translation.value), homotVal =eval(homothetie.value);
-    tab.forEach(elem => newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal)*homotVal)/100, Math.trunc(elem.y*homotVal)/100, elem.z)));
+    if (tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
+
+    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value);
+    tab.forEach(elem => newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal) * homotVal) / 100, Math.trunc(elem.y * homotVal) / 100, elem.z)));
 
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
-    const figure = new THREE.Line( geometry, material );
-    scene.add( figure ); // on ajoute à la scène tous les droites
+    const figure = new THREE.Line(geometry, material);
+    scene.add(figure); // on ajoute à la scène tous les droites
 
     camera.position.x = cam.x;
     camera.position.y = cam.y;
     camera.position.z = cam.z;
-    renderer.render( scene, camera );
+    renderer.render(scene, camera);
     afficherPoints(tab);
 }
 
 /**
  * Read the coordinate input and calculate  Bézier curve with the Casteljau algorithm.
  */
-function takeCoordonnees(){
-    let coordonnees=document.getElementById("coordonnees").value;
-    let StringofPoint=coordonnees;
-    let tableau=StringofPoint.split(' ');
-    let transVal = eval(translation.value), homotVal =eval(homothetie.value)/100;
-    for(let i=0;i<tableau.length;i++){
-        if(tableau[i].includes(';')){
+function takeCoordonnees() {
+    let coordonnees = document.getElementById("coordonnees").value;
+    let StringofPoint = coordonnees;
+    let tableau = StringofPoint.split(' ');
+    let transVal = eval(translation.value), homotVal = eval(homothetie.value) / 100;
+    for (let i = 0; i < tableau.length; i++) {
+        if (tableau[i].includes(';')) {
             let coord = tableau[i].split(';');
-            droite.push(new THREE.Vector3((eval(coord[0])-transVal)/homotVal,eval(coord[1])/homotVal, 0 ));
+            droite.push(new THREE.Vector3((eval(coord[0]) - transVal) / homotVal, eval(coord[1]) / homotVal, 0));
         }
     }
     majCasteljau();
@@ -76,47 +76,47 @@ function takeCoordonnees(){
 
 
 
-function createTable(tab){
-        let form1=document.getElementById("ListOfPoints");
-        let form = document.createElement("form");
-        form.style.display="flex";
-        form.style.flex="row";
-        form1.appendChild(form); 
-        let j=0
-    for(let i=0;i<tab.length;i++){
+function createTable(tab) {
+    let form1 = document.getElementById("ListOfPoints");
+    let form = document.createElement("form");
+    form.style.display = "flex";
+    form.style.flex = "row";
+    form1.appendChild(form);
+    let j = 0
+    for (let i = 0; i < tab.length; i++) {
         let ligne = document.createElement("input");
-        ligne.setAttribute("class","form-control");
-        ligne.style.display="flex";
-        ligne.style.flexDirection="row";
+        ligne.setAttribute("class", "form-control");
+        ligne.style.display = "flex";
+        ligne.style.flexDirection = "row";
         ligne.setAttribute("type", "input");
         ligne.setAttribute("name", "Point".i);
         ligne.setAttribute("label", "Point".i);
-        ligne.value = tab[i]+';'+tab[i+1];
+        ligne.value = tab[i] + ';' + tab[i + 1];
         ligne.setAttribute("id", j);
-        ligne.style.height="23px";
+        ligne.style.height = "23px";
         let label = document.createElement("Label");
-        label.style.padding="0 5px 0 5px";
-        label.style.width="40%";
-        label.setAttribute("for",j);
-        label.innerHTML = "Point "+ (j+1)+":";
+        label.style.padding = "0 5px 0 5px";
+        label.style.width = "40%";
+        label.setAttribute("for", j);
+        label.innerHTML = "Point " + (j + 1) + ":";
         form.appendChild(label);
-        form.appendChild(ligne);  
-        i++,j++;
+        form.appendChild(ligne);
+        i++, j++;
     }
     document.getElementById("weight").style.display = "block";
-    let btnchange=document.getElementById("change");
-    btnchange.style.display="block";
+    let btnchange = document.getElementById("change");
+    btnchange.style.display = "block";
     btnchange.addEventListener("click", () => {
         changePoints(tab);
     });
 }
 
-function changePoints(tab){
-    let x=0
+function changePoints(tab) {
+    let x = 0
     droite.splice(0, droite.length);
-    for(let j=0;j<tab.length;j++){
-        let tableau=(document.getElementById(x).value).split(';');
-        droite.push(new THREE.Vector3(eval(tableau[0]),eval(tableau[1]), 0 ));
+    for (let j = 0; j < tab.length; j++) {
+        let tableau = (document.getElementById(x).value).split(';');
+        droite.push(new THREE.Vector3(eval(tableau[0]), eval(tableau[1]), 0));
         x++
         j++;
     }
@@ -129,9 +129,9 @@ function changePoints(tab){
  * @returns {THREE.Vector3}
  */
 
-function refresh(){
+function refresh() {
     reset();
-    
+
     afficherDroite(droite);
     afficherPoints(casteljauPoints);
     afficherPoints(points);
@@ -140,14 +140,14 @@ function refresh(){
 let translation = document.getElementById("trans");
 translation.addEventListener("input", transformation);
 
-function transformation(){
+function transformation() {
     let transVal = eval(translation.value);
     let homotVal = eval(homothetie.value);
     console.log(transVal, homotVal);
     document.getElementById("transVal").innerHTML = transVal;
-    document.getElementById("homotVal").innerHTML = homotVal/100;
-    for(let i = 0; i < droite.length; i++){
-        document.getElementById(i).value = (Math.trunc((droite[i].x+transVal)*homotVal))/100+";"+ (Math.trunc((droite[i].y)*homotVal)/100);
+    document.getElementById("homotVal").innerHTML = homotVal / 100;
+    for (let i = 0; i < droite.length; i++) {
+        document.getElementById(i).value = (Math.trunc((droite[i].x + transVal) * homotVal)) / 100 + ";" + (Math.trunc((droite[i].y) * homotVal) / 100);
     }
     refresh();
 }
