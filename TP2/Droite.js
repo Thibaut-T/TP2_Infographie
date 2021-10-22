@@ -10,14 +10,14 @@ const stepByStep = new THREE.LineBasicMaterial({ //définition taille et couleur
 
 const droite = []; // Tableau de points pour la droite
 
-
-/*let btnMore = document.getElementById("+");
-btnMore.addEventListener("click", more);
-let btnLess = document.getElementById("-");
-btnLess.addEventListener("click", less);*/
-
 let homothetie = document.getElementById("homot");
 homothetie.addEventListener("input", transformation);
+
+let translation = document.getElementById("trans");
+translation.addEventListener("input", transformation);
+
+let rotation = document.getElementById("rot");
+rotation.addEventListener("input", transformation);
 
 /**
  * Take the position of the mouse at the moment of clicking and then calculate the Bézier curve with the Casteljau algorithm.
@@ -43,8 +43,15 @@ function afficherDroite(tab, material = line) {
 
     if (tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
 
-    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value);
-    tab.forEach(elem => newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal) * homotVal) / 100, Math.trunc(elem.y * homotVal) / 100, elem.z)));
+    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value);
+    
+    tab.forEach(elem => {
+        //newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal) * homotVal * Math.cos(Math.PI*rotVal/180)) / 100, Math.trunc(elem.y * homotVal * Math.sin(Math.PI*rotVal/180)) / 100, elem.z))
+    
+        let x = Math.trunc((elem.x + transVal) * homotVal) / 100;
+        let y = Math.trunc(elem.y * homotVal) / 100;
+        newTab.push(new THREE.Vector3(x*Math.cos(Math.PI*rotVal/180) - y * Math.sin(Math.PI*rotVal/180) , y*Math.cos(Math.PI*rotVal/180) - y * Math.sin(Math.PI*rotVal/180), elem.z))
+    });
 
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
     const figure = new THREE.Line(geometry, material);
@@ -137,15 +144,14 @@ function refresh() {
     afficherPoints(points);
 }
 
-let translation = document.getElementById("trans");
-translation.addEventListener("input", transformation);
-
 function transformation() {
     let transVal = eval(translation.value);
     let homotVal = eval(homothetie.value);
+    let rotVal = eval(rotation.value);
     console.log(transVal, homotVal);
-    document.getElementById("transVal").innerHTML = transVal;
-    document.getElementById("homotVal").innerHTML = homotVal / 100;
+    document.getElementById("transOutputId").value = transVal;
+    document.getElementById("homotOutputId").value = homotVal / 100;
+    document.getElementById("rotOutputId").value = rotVal+"°";
     for (let i = 0; i < droite.length; i++) {
         document.getElementById(i).value = (Math.trunc((droite[i].x + transVal) * homotVal)) / 100 + ";" + (Math.trunc((droite[i].y) * homotVal) / 100);
     }

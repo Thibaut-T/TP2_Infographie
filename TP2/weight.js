@@ -1,4 +1,5 @@
 let poids = document.getElementById("poids");
+let poidsOutput = document.getElementById("weightOutputId");
 poids.addEventListener("input", weight);
 
 function weight() {
@@ -7,5 +8,6 @@ function weight() {
     if (val != -1 && val != 101) {
         val /= 100;
         barycentre(droite, val, true);
+        poidsOutput.value = val;
     }
 }
