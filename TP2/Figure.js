@@ -36,8 +36,10 @@ function resetButton() {
     reset();
     translation.value = 0;
     homothetie.value = 100;
+    rotation.value = 0;
     document.getElementById("transOutputId").value= "0";
     document.getElementById("homotOutputId").value = "1.00";
+    document.getElementById("rotOutputId").value = "O°";
 
     cam = new THREE.Vector3(0, 0, 10);
     camera.position.x = cam.x;
@@ -47,7 +49,8 @@ function resetButton() {
     droite.splice(0, droite.length);
     document.getElementById("change").style.display = "none";
     document.getElementById("weight").style.display = "none";
-    document.getElementById("weightOutputId") = "0.00";
+    poids.value = 0;
+    poidsOutput.value = "0.00";
     if (document.getElementById("ListOfPoints").children.length == 2) {
         document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
     }
@@ -82,11 +85,11 @@ function calculate() {
  */
 function afficherPoints(tab) {
 
-    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value);
+    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     tab.forEach(elem => {
         let x = Math.trunc((elem.x + transVal) * homotVal) / 100;
         let y = Math.trunc(elem.y * homotVal) / 100;
-        newTab.push(new THREE.Vector3(x*Math.cos(Math.PI*rotVal/180) - y * Math.sin(Math.PI*rotVal/180) , y*Math.cos(Math.PI*rotVal/180) - y * Math.sin(Math.PI*rotVal/180), elem.z))
+        newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
     });
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);
 
