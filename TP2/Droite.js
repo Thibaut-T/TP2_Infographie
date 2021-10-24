@@ -13,8 +13,10 @@ const droite = []; // Tableau de points pour la droite
 let homothetie = document.getElementById("homot");
 homothetie.addEventListener("input", transformation);
 
-let translation = document.getElementById("trans");
-translation.addEventListener("input", transformation);
+let translationX = document.getElementById("transX");
+translationX.addEventListener("input", transformation);
+let translationY = document.getElementById("transY");
+translationY.addEventListener("input", transformation);
 
 let rotation = document.getElementById("rot");
 rotation.addEventListener("input", transformation);
@@ -26,9 +28,9 @@ rotation.addEventListener("input", transformation);
  */
 function getMousePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();    //Get the size of canvas and his position on the screen 
-    let transVal = eval(translation.value), homotVal = eval(homothetie.value) / 100, rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
-    let Xaxis = ((cam.z * (event.clientX - rect.left - (canvas.width / 2)) * 3 / (canvas.width / 2)) + cam.x - transVal) / homotVal;
-    let Yaxis = ((cam.z * (rect.top + (canvas.height / 2) - event.clientY) * 3.8 / (5 * (canvas.height / 2))) + cam.y) / homotVal;
+    let transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value) / 100, rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
+    let Xaxis = ((cam.z * (event.clientX - rect.left - (canvas.width / 2)) * 3 / (canvas.width / 2)) + cam.x - transXVal) / homotVal;
+    let Yaxis = ((cam.z * (rect.top + (canvas.height / 2) - event.clientY) * 3.8 / (5 * (canvas.height / 2))) + cam.y - transYVal) / homotVal;
     let y = Yaxis * Math.cos(alpha) - Xaxis * Math.sin(alpha);
     let x = (Xaxis + y * Math.sin(alpha))/Math.cos(alpha);
     droite.push(new THREE.Vector3(x, y, 0));
@@ -45,11 +47,11 @@ function afficherDroite(tab, material = line) {
 
     if (tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
 
-    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
+    let newTab = [], transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     
     tab.forEach(elem => {
-        let x = Math.trunc((elem.x + transVal) * homotVal) / 100;
-        let y = Math.trunc(elem.y * homotVal) / 100;
+        let x = Math.trunc((elem.x + transXVal) * homotVal) / 100;
+        let y = Math.trunc((elem.y + transYVal) * homotVal) / 100;
         newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
     });
 
@@ -71,12 +73,12 @@ function takeCoordonnees() {
     let coordonnees = document.getElementById("coordonnees").value;
     let StringofPoint = coordonnees;
     let tableau = StringofPoint.split(' ');
-    let transVal = eval(translation.value), homotVal = eval(homothetie.value) / 100, rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
+    let transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value) / 100, rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     for (let i = 0; i < tableau.length; i++) {
         if (tableau[i].includes(';')) {
             let coord = tableau[i].split(';');
-            let Xaxis = (eval(coord[0]) - transVal) / homotVal;
-            let Yaxis = eval(coord[1]) / homotVal;
+            let Xaxis = (eval(coord[0]) - transXVal) / homotVal;
+            let Yaxis = (eval(coord[1]) - transYVal) / homotVal;
             let y = Yaxis * Math.cos(alpha) - Xaxis * Math.sin(alpha);
             let x = (Xaxis + y * Math.sin(alpha))/Math.cos(alpha);
             droite.push(new THREE.Vector3(x , y, 0));
@@ -149,18 +151,21 @@ function refresh() {
 }
 
 function transformation() {
-    let transVal = eval(translation.value);
+    let transXVal = eval(translationX.value);
+    let transYVal = eval(translationY.value);
     let homotVal = eval(homothetie.value);
     let rotVal = eval(rotation.value);
     let alpha = Math.PI*rotVal/180;
-    console.log(transVal, homotVal);
-    document.getElementById("transOutputId").value = transVal;
+
+    document.getElementById("transXOutputId").value = transXVal;
+    document.getElementById("transYOutputId").value = transYVal;
     document.getElementById("homotOutputId").value = homotVal / 100;
     document.getElementById("rotOutputId").value = rotVal+"°";
     for (let i = 0; i < droite.length; i++) {
-        let x = (Math.trunc((droite[i].x + transVal) * homotVal)) / 100;
-        let y = (Math.trunc((droite[i].y) * homotVal) / 100);
-        document.getElementById(i).value = x*Math.cos(alpha) - y * Math.sin(alpha) + ";" + x*Math.sin(alpha) + y * Math.cos(alpha);
+        let x = (Math.trunc((droite[i].x + transXVal) * homotVal)) / 100;
+        let y = (Math.trunc((droite[i].y + transYVal) * homotVal)) / 100;
+        console.log((x*Math.cos(alpha) - y * Math.sin(alpha)) + ";" + (x*Math.sin(alpha) + y * Math.cos(alpha)));
+        document.getElementById(i).value = (x*Math.cos(alpha) - y * Math.sin(alpha)) + ";" + (x*Math.sin(alpha) + y * Math.cos(alpha));
     }
     refresh();
 }

@@ -34,10 +34,12 @@ function wichOne() {
  */
 function resetButton() {
     reset();
-    translation.value = 0;
+    translationX.value = 0;
+    translationY.value = 0;
     homothetie.value = 100;
     rotation.value = 0;
-    document.getElementById("transOutputId").value= "0";
+    document.getElementById("transXOutputId").value= "0";
+    document.getElementById("transYOutputId").value= "0";
     document.getElementById("homotOutputId").value = "1.00";
     document.getElementById("rotOutputId").value = "O°";
 
@@ -74,7 +76,7 @@ function calculate() {
     y = transformString(Y.value);
 
     for (let t = 0; t < 2 * Math.PI; t += 0.0001) {
-        points.push(new THREE.Vector3(evaluate(t, x) + eval(translation.value), evaluate(t, y), 0));
+        points.push(new THREE.Vector3(evaluate(t, x) + eval(translationX.value), evaluate(t, y) + eval(translationY.value), 0));
     }
 
     afficherPoints(points);
@@ -85,10 +87,10 @@ function calculate() {
  */
 function afficherPoints(tab) {
 
-    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
+    let newTab = [], transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     tab.forEach(elem => {
-        let x = Math.trunc((elem.x + transVal) * homotVal) / 100;
-        let y = Math.trunc(elem.y * homotVal) / 100;
+        let x = Math.trunc((elem.x + transXVal) * homotVal) / 100;
+        let y = Math.trunc((elem.y + transYVal)* homotVal) / 100;
         newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
     });
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);
