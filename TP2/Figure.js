@@ -34,10 +34,14 @@ function wichOne() {
  */
 function resetButton() {
     reset();
-    translation.value = 0;
+    translationX.value = 0;
+    translationY.value = 0;
     homothetie.value = 100;
-    document.getElementById("transVal").innerHTML = "0";
-    document.getElementById("homotVal").innerHTML = "1.00";
+    rotation.value = 0;
+    document.getElementById("transXOutputId").value= "0";
+    document.getElementById("transYOutputId").value= "0";
+    document.getElementById("homotOutputId").value = "1.00";
+    document.getElementById("rotOutputId").value = "O°";
 
     cam = new THREE.Vector3(0, 0, 10);
     camera.position.x = cam.x;
@@ -47,7 +51,8 @@ function resetButton() {
     droite.splice(0, droite.length);
     document.getElementById("change").style.display = "none";
     document.getElementById("weight").style.display = "none";
-    document.getElementById("poids").innerHTML = "Poids : 0.00";
+    poids.value = 0;
+    poidsOutput.value = "0.00";
     if (document.getElementById("ListOfPoints").children.length == 2) {
         document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
     }
@@ -71,7 +76,7 @@ function calculate() {
     y = transformString(Y.value);
 
     for (let t = 0; t < 2 * Math.PI; t += 0.0001) {
-        points.push(new THREE.Vector3(evaluate(t, x) + eval(translation.value), evaluate(t, y), 0));
+        points.push(new THREE.Vector3(evaluate(t, x) + eval(translationX.value), evaluate(t, y) + eval(translationY.value), 0));
     }
 
     afficherPoints(points);
@@ -82,8 +87,12 @@ function calculate() {
  */
 function afficherPoints(tab) {
 
-    let newTab = [], transVal = eval(translation.value), homotVal = eval(homothetie.value);
-    tab.forEach(elem => newTab.push(new THREE.Vector3(Math.trunc((elem.x + transVal) * homotVal) / 100, Math.trunc(elem.y * homotVal) / 100, elem.z)));
+    let newTab = [], transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
+    tab.forEach(elem => {
+        let x = Math.trunc((elem.x + transXVal) * homotVal) / 100;
+        let y = Math.trunc((elem.y + transYVal)* homotVal) / 100;
+        newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
+    });
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);
 
     const figure = new THREE.Points(geometry, material);
