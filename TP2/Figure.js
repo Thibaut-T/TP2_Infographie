@@ -108,7 +108,7 @@ function afficherPoints(tab) {
     tab.forEach(elem => {
         let x = Math.trunc((elem.x + transXVal) * homotVal) / 100;
         let y = Math.trunc((elem.y + transYVal)* homotVal) / 100;
-        newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
+        newTab.push(new THREE.Vector3(Math.trunc((x*Math.cos(alpha) - y * Math.sin(alpha))*100)/100 , Math.trunc((x*Math.sin(alpha) + y * Math.cos(alpha))*100)/100, elem.z))
     });
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);
 
