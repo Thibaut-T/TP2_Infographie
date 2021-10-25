@@ -3,15 +3,15 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.inner
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight - 250);
-document.body.appendChild(renderer.domElement); //création de la scène 
+document.body.appendChild(renderer.domElement); //Create scene
 
-const material = new THREE.PointsMaterial({ //définition taille et couleurs des points
+const material = new THREE.PointsMaterial({ //Definie size/color of point
     size: 0.06,
     color: 0x7CFC00
 });
 
-const points = []; // tableau de points
-let cam = new THREE.Vector3(0, 0, 10);//point de la caméra
+const points = []; // tab of points
+let cam = new THREE.Vector3(0, 0, 10);
 
 renderer.domElement.addEventListener("click", function (e) //Add event to our canvas 
 {
@@ -67,7 +67,8 @@ function reset() {
 }
 
 /**
- * Récupère les équations, calcule la courbe et affiche le rendu
+ *
+ * Get equations and calculate the curve and print it
  */
 function calculate() {
 
@@ -83,7 +84,7 @@ function calculate() {
 }
 
 /**
- * Affiche les points de la courbe paramétrique
+ * Draw points of parametric curve
  */
 function afficherPoints(tab) {
 
@@ -96,7 +97,7 @@ function afficherPoints(tab) {
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);
 
     const figure = new THREE.Points(geometry, material);
-    scene.add(figure); // on ajoute à la scène tous les points
+    scene.add(figure); 
     camera.position.x = cam.x;
     camera.position.y = cam.y;
     camera.position.z = cam.z;

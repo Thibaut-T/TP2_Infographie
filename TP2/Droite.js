@@ -1,14 +1,14 @@
-const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
+const line = new THREE.LineBasicMaterial({ // Definine size/color of the polynomial
     linewidth: 0.05,
     color: 0x0000FF
 })
 
-const stepByStep = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
+const stepByStep = new THREE.LineBasicMaterial({ //Define size/color of lines
     linewidth: 0.05,
     color: 0xCD0300
 })
 
-const droite = []; // Tableau de points pour la droite
+const droite = []; 
 
 let homothetie = document.getElementById("homot");
 homothetie.addEventListener("input", transformation);
@@ -45,7 +45,7 @@ function getMousePosition(canvas, event) {
  */
 function afficherDroite(tab, material = line) {
 
-    if (tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
+    if (tab.lenght < 2) return; //Check if you have enough points
 
     let newTab = [], transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     
@@ -55,9 +55,9 @@ function afficherDroite(tab, material = line) {
         newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
     });
 
-    const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
+    const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // Add to buffer
     const figure = new THREE.Line(geometry, material);
-    scene.add(figure); // on ajoute à la scène tous les droites
+    scene.add(figure); // Add scene to all the line
 
     camera.position.x = cam.x;
     camera.position.y = cam.y;
