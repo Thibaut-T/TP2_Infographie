@@ -1,7 +1,8 @@
-const line = new THREE.LineBasicMaterial({ // Definine size/color of the polynomial
-    linewidth: 0.05,
-    color: 0x0000FF
-})
+const line = new THREE.LineBasicMaterial({
+  // Definine size/color of the polynomial
+  linewidth: 0.05,
+  color: 0x0000ff,
+});
 
 const stepByStep = new THREE.LineBasicMaterial({ //Define size/color of lines
     linewidth: 0.05,
