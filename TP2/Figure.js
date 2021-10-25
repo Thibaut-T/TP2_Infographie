@@ -11,35 +11,34 @@ const material = new THREE.PointsMaterial({ //Definie size/color of point
 });
 
 const points = []; // tab of points
-let cam = new THREE.Vector3(0, 0, 10);
-let change=document.getElementById("coordonnees");
+let cam = new THREE.Vector3(0, 0, 10); // Position of the visual
 
-renderer.domElement.addEventListener("click", function (e) //Add event to our canvas 
-{
+renderer.domElement.addEventListener("click", function (e){ //Add event to our canvas 
     getMousePosition(renderer.domElement, e);      //If their is a click, call the function 
 });
 
-let button_app1=document.getElementById("app1");  //Get the click and change the value of input "coordonées"
+//Get the click change the value of input "coordonnees" and displays Bézier curve
+let button_app1=document.getElementById("app1");  // For first application
 button_app1.addEventListener("click",app1 = () =>{
     resetButton();
     cam.z = 3;
-    change.value="0;0 0;1 1;1 1;0";
+    document.getElementById("coordonnees").value="0;0 0;1 1;1 1;0";
     takeCoordonnees()
 });
 
-let button_app2=document.getElementById("app2");
+let button_app2=document.getElementById("app2");  // For second application
 button_app2.addEventListener("click",app2 = () =>{
     resetButton();
     cam.z = 3;
-    change.value="0;0 1;0 0;1 1;1";
+    document.getElementById("coordonnees").value="0;0 1;0 0;1 1;1";
     takeCoordonnees()
 });
 
-let button_app3=document.getElementById("app3");
+let button_app3=document.getElementById("app3");  // For third application
 button_app3.addEventListener("click",app3 = () =>{
     resetButton();
     cam.z = 3;
-    change.value="0;0 1;1 0;1 1;0";
+    document.getElementById("coordonnees").value="0;0 1;1 0;1 1;0";
     takeCoordonnees()
 });
 
@@ -50,12 +49,15 @@ button_reset.addEventListener("click", resetButton);
 let button = document.getElementById("valider");
 button.addEventListener("click", wichOne);
 
+/**
+ * See if we want a parametric curve or if we don't enter the points of the control polynomial
+ */
 function wichOne() {
     (document.getElementById("coordonnees").value == "") ? calculate() : takeCoordonnees();
 }
 
 /**
- * Reset canvas, points and droite array
+ * Reset canvas, sliders, view, points and droite array
  */
 function resetButton() {
     reset();
@@ -78,6 +80,8 @@ function resetButton() {
     document.getElementById("weight").style.display = "none";
     poids.value = 0;
     poidsOutput.value = "0.00";
+
+    document.getElementById("coordonnees").value = "";
     if (document.getElementById("ListOfPoints").children.length == 2) {
         document.getElementById("ListOfPoints").removeChild(document.getElementById("ListOfPoints").lastElementChild);
     }
@@ -92,7 +96,6 @@ function reset() {
 }
 
 /**
- *
  * Get equations and calculate the curve and print it
  */
 function calculate() {
@@ -110,6 +113,7 @@ function calculate() {
 
 /**
  * Draw points of parametric curve
+ * @param {Array} tab
  */
 function afficherPoints(tab) {
 

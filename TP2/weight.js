@@ -2,6 +2,9 @@ let poids = document.getElementById("poids");
 let poidsOutput = document.getElementById("weightOutputId");
 poids.addEventListener("input", weight);
 
+/**
+ * Calculates and displays the points found for a given weight
+ */
 function weight() {
     refresh();
     let val = eval(document.getElementById("poids").value);
