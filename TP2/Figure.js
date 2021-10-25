@@ -3,19 +3,35 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.inner
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight - 250);
-document.body.appendChild(renderer.domElement); //création de la scène 
+document.body.appendChild(renderer.domElement); //Create scene
 
-const material = new THREE.PointsMaterial({ //définition taille et couleurs des points
+const material = new THREE.PointsMaterial({ //Definie size/color of point
     size: 0.06,
     color: 0x7CFC00
 });
 
-const points = []; // tableau de points
-let cam = new THREE.Vector3(0, 0, 10);//point de la caméra
+const points = []; // tab of points
+let cam = new THREE.Vector3(0, 0, 10);
+let change=document.getElementById("coordonnees");
 
 renderer.domElement.addEventListener("click", function (e) //Add event to our canvas 
 {
     getMousePosition(renderer.domElement, e);      //If their is a click, call the function 
+});
+
+let button_app1=document.getElementById("app1");  //Get the click and change the value of input "coordonées"
+button_app1.addEventListener("click",app1 = () =>{
+    change.value="0;0 1;1 1;0";
+});
+
+let button_app2=document.getElementById("app2");
+button_app2.addEventListener("click",app2 = () =>{
+    change.value="0;0 0;1 1;1";
+});
+
+let button_app3=document.getElementById("app3");
+button_app3.addEventListener("click",app3 = () =>{
+    change.value="0;0 1;1 1;0";
 });
 
 let button_reset = document.getElementById("reset");
@@ -67,7 +83,8 @@ function reset() {
 }
 
 /**
- * Récupère les équations, calcule la courbe et affiche le rendu
+ *
+ * Get equations and calculate the curve and print it
  */
 function calculate() {
 
@@ -83,7 +100,7 @@ function calculate() {
 }
 
 /**
- * Affiche les points de la courbe paramétrique
+ * Draw points of parametric curve
  */
 function afficherPoints(tab) {
 
@@ -96,7 +113,7 @@ function afficherPoints(tab) {
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);
 
     const figure = new THREE.Points(geometry, material);
-    scene.add(figure); // on ajoute à la scène tous les points
+    scene.add(figure); 
     camera.position.x = cam.x;
     camera.position.y = cam.y;
     camera.position.z = cam.z;

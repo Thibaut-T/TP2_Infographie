@@ -1,14 +1,14 @@
-const line = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
+const line = new THREE.LineBasicMaterial({ // Definine size/color of the polynomial
     linewidth: 0.05,
     color: 0x0000FF
 })
 
-const stepByStep = new THREE.LineBasicMaterial({ //définition taille et couleurs des lignes
+const stepByStep = new THREE.LineBasicMaterial({ //Define size/color of lines
     linewidth: 0.05,
     color: 0xCD0300
 })
 
-const droite = []; // Tableau de points pour la droite
+const droite = []; 
 
 let homothetie = document.getElementById("homot");
 homothetie.addEventListener("input", transformation);
@@ -55,7 +55,7 @@ function afficherDroite(tab, material = line) {
 
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
     const figure = new THREE.Line(geometry, material);
-    scene.add(figure); // on ajoute à la scène tous les droites
+    scene.add(figure); // Add scene to all the line
 
     camera.position.x = cam.x;
     camera.position.y = cam.y;
@@ -90,12 +90,12 @@ function takeCoordonnees() {
 function createTable(tab) {
     let form1 = document.getElementById("ListOfPoints");
     let form = document.createElement("form");
-    form.style.display = "flex";
+    form.style.display = "flex"; //Alignement des points sur l'affichage 
     form.style.flex = "row";
     form1.appendChild(form);
     let j = 0
     for (let i = 0; i < tab.length; i++) {
-        let ligne = document.createElement("input");
+        let ligne = document.createElement("input");  //Pour chaque point, on crée un input avec les coordonnées du point
         ligne.setAttribute("class", "form-control");
         ligne.style.display = "flex";
         ligne.style.flexDirection = "row";
@@ -104,8 +104,8 @@ function createTable(tab) {
         ligne.setAttribute("label", "Point".i);
         ligne.value = tab[i] + ';' + tab[i + 1];
         ligne.setAttribute("id", j);
-        ligne.style.height = "23px";
-        let label = document.createElement("Label");
+        ligne.style.height = "23px";                        //Just add style in CSS
+        let label = document.createElement("Label");        
         label.style.padding = "0 5px 0 5px";
         label.style.width = "40%";
         label.setAttribute("for", j);
@@ -126,7 +126,9 @@ function changePoints(tab) {
     let x = 0, transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value) / 100, rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     droite.splice(0, droite.length);
     for (let j = 0; j < tab.length; j++) {
+        //get coordonate of changing points just above
         let tableau = (document.getElementById(x).value).split(';');
+        //x.value =(3;2 4;2) ===> change into tableau[3,2,4,2];
         let Xaxis = (eval(tableau[0]) - transXVal) / homotVal;
         let Yaxis = (eval(tableau[1]) - transYVal) / homotVal;
         let coordY = Yaxis * Math.cos(alpha) - Xaxis * Math.sin(alpha);
