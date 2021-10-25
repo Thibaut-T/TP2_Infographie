@@ -45,15 +45,15 @@ function getMousePosition(canvas, event) {
  */
 function afficherDroite(tab, material = line) {
 
-    if (tab.lenght < 2) return; // On vérifie qu'on a assez de points pour faire un droite
-
     let newTab = [], transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value), rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     
     tab.forEach(elem => {
         let x = Math.trunc((elem.x + transXVal) * homotVal) / 100;
         let y = Math.trunc((elem.y + transYVal) * homotVal) / 100;
-        newTab.push(new THREE.Vector3(x*Math.cos(alpha) - y * Math.sin(alpha) , x*Math.sin(alpha) + y * Math.cos(alpha), elem.z))
+        newTab.push(new THREE.Vector3(Math.trunc((x*Math.cos(alpha) - y * Math.sin(alpha))*100)/100 , Math.trunc((x*Math.sin(alpha) + y * Math.cos(alpha))*100)/100, elem.z))
     });
+
+    console.log(tab[tab.length-1], newTab[newTab.length-1]);
 
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
     const figure = new THREE.Line(geometry, material);
@@ -125,11 +125,15 @@ function createTable(tab) {
 }
 
 function changePoints(tab) {
-    let x = 0
+    let x = 0, transXVal = eval(translationX.value), transYVal = eval(translationY.value), homotVal = eval(homothetie.value) / 100, rotVal = eval(rotation.value), alpha = Math.PI*rotVal/180;
     droite.splice(0, droite.length);
     for (let j = 0; j < tab.length; j++) {
         let tableau = (document.getElementById(x).value).split(';');
-        droite.push(new THREE.Vector3(eval(tableau[0]), eval(tableau[1]), 0));
+        let Xaxis = (eval(tableau[0]) - transXVal) / homotVal;
+        let Yaxis = (eval(tableau[1]) - transYVal) / homotVal;
+        let coordY = Yaxis * Math.cos(alpha) - Xaxis * Math.sin(alpha);
+        let coordX = (Xaxis + y * Math.sin(alpha))/Math.cos(alpha);
+        droite.push(new THREE.Vector3(coordX , coordY, 0));
         x++
         j++;
     }
@@ -164,8 +168,7 @@ function transformation() {
     for (let i = 0; i < droite.length; i++) {
         let x = (Math.trunc((droite[i].x + transXVal) * homotVal)) / 100;
         let y = (Math.trunc((droite[i].y + transYVal) * homotVal)) / 100;
-        console.log((x*Math.cos(alpha) - y * Math.sin(alpha)) + ";" + (x*Math.sin(alpha) + y * Math.cos(alpha)));
-        document.getElementById(i).value = (x*Math.cos(alpha) - y * Math.sin(alpha)) + ";" + (x*Math.sin(alpha) + y * Math.cos(alpha));
+        document.getElementById(i).value = (Math.trunc((x*Math.cos(alpha) - y * Math.sin(alpha))*100)/100) + ";" + (Math.trunc((x*Math.sin(alpha) + y * Math.cos(alpha))*100)/100);
     }
     refresh();
 }
