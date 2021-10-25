@@ -93,12 +93,12 @@ function takeCoordonnees() {
 function createTable(tab) {
     let form1 = document.getElementById("ListOfPoints");
     let form = document.createElement("form");
-    form.style.display = "flex"; //Alignement des points sur l'affichage 
+    form.style.display = "flex";
     form.style.flex = "row";
     form1.appendChild(form);
     let j = 0
     for (let i = 0; i < tab.length; i++) {
-        let ligne = document.createElement("input");  //Pour chaque point, on crée un input avec les coordonnées du point
+        let ligne = document.createElement("input");  // For each point create a input element
         ligne.setAttribute("class", "form-control");
         ligne.style.display = "flex";
         ligne.style.flexDirection = "row";
