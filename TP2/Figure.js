@@ -19,7 +19,7 @@ renderer.domElement.addEventListener("click", function (e) //Add event to our ca
     getMousePosition(renderer.domElement, e);      //If their is a click, call the function 
 });
 
-let button_app1=document.getElementById("app1");
+let button_app1=document.getElementById("app1");  //Get the click and change the value of input "coordonées"
 button_app1.addEventListener("click",app1 = () =>{
     change.value="0;0 1;1 1;0";
 });
