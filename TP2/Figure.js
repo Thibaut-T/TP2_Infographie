@@ -12,10 +12,26 @@ const material = new THREE.PointsMaterial({ //Definie size/color of point
 
 const points = []; // tab of points
 let cam = new THREE.Vector3(0, 0, 10);
+let change=document.getElementById("coordonnees");
 
 renderer.domElement.addEventListener("click", function (e) //Add event to our canvas 
 {
     getMousePosition(renderer.domElement, e);      //If their is a click, call the function 
+});
+
+let button_app1=document.getElementById("app1");
+button_app1.addEventListener("click",app1 = () =>{
+    change.value="0;0 1;1 1;0";
+});
+
+let button_app2=document.getElementById("app2");
+button_app2.addEventListener("click",app2 = () =>{
+    change.value="0;0 0;1 1;1";
+});
+
+let button_app3=document.getElementById("app3");
+button_app3.addEventListener("click",app3 = () =>{
+    change.value="0;0 1;1 1;0";
 });
 
 let button_reset = document.getElementById("reset");
