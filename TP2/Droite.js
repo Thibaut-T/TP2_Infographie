@@ -53,8 +53,6 @@ function afficherDroite(tab, material = line) {
         newTab.push(new THREE.Vector3(Math.trunc((x*Math.cos(alpha) - y * Math.sin(alpha))*100)/100 , Math.trunc((x*Math.sin(alpha) + y * Math.cos(alpha))*100)/100, elem.z))
     });
 
-    console.log(tab[tab.length-1], newTab[newTab.length-1]);
-
     const geometry = new THREE.BufferGeometry().setFromPoints(newTab);  // On ajoute au buffer
     const figure = new THREE.Line(geometry, material);
     scene.add(figure); // on ajoute à la scène tous les droites
