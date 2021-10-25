@@ -21,17 +21,26 @@ renderer.domElement.addEventListener("click", function (e) //Add event to our ca
 
 let button_app1=document.getElementById("app1");  //Get the click and change the value of input "coordonées"
 button_app1.addEventListener("click",app1 = () =>{
-    change.value="0;0 1;1 1;0";
+    resetButton();
+    cam.z = 3;
+    change.value="0;0 0;1 1;1 1;0";
+    takeCoordonnees()
 });
 
 let button_app2=document.getElementById("app2");
 button_app2.addEventListener("click",app2 = () =>{
-    change.value="0;0 0;1 1;1";
+    resetButton();
+    cam.z = 3;
+    change.value="0;0 1;0 0;1 1;1";
+    takeCoordonnees()
 });
 
 let button_app3=document.getElementById("app3");
 button_app3.addEventListener("click",app3 = () =>{
-    change.value="0;0 1;1 1;0";
+    resetButton();
+    cam.z = 3;
+    change.value="0;0 1;1 0;1 1;0";
+    takeCoordonnees()
 });
 
 let button_reset = document.getElementById("reset");
