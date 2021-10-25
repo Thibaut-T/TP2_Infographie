@@ -1,5 +1,12 @@
 const casteljauPoints = []; // Tableau de points pour la courbe avec l'olgo de Casteljau
 
+/**
+ * Recursive function that finds the point on the curve for a given weight based on the control points 
+ * @param {Array} tab 
+ * @param {Integer} poids 
+ * @param {Boolean} print 
+ * @returns {THREE.Vector3}
+ */
 function barycentre(tab, poids, print) {
     if (tab.length == 1) return tab[0];
     let tabi = [];
@@ -26,6 +33,9 @@ function casteljau(tab) {
     refresh();
 }
 
+/**
+ * Recalculates the bezier curve when a control point is added or modified
+ */
 function majCasteljau() {
     let finalTable = [];
     droite.forEach(elem => finalTable.push(Math.round(elem.x * 100) / 100, Math.round(elem.y * 100) / 100));
